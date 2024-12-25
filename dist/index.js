@@ -10,13 +10,13 @@ const webhookMenu_routes_1 = __importDefault(require("./routes/webhookMenu.route
 const webhookOrder_routes_1 = __importDefault(require("./routes/webhookOrder.routes"));
 const webhookStatus_routes_1 = __importDefault(require("./routes/webhookStatus.routes"));
 const app = (0, express_1.default)();
-const port = 4000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 app.use(express_1.default.json());
 app.use("/", deliveroo_routes_1.default);
 app.use("/restaurant", restaurant_routes_1.default);
 app.use("/webhook/menu", webhookMenu_routes_1.default);
 app.use("/webhook/order", webhookOrder_routes_1.default);
 app.use("/webhook/update-status", webhookStatus_routes_1.default);
-app.listen(port, () => {
-    console.log(`The server run on ${port}`);
+app.listen(PORT, () => {
+    console.log(`The server run on ${PORT}`);
 });
