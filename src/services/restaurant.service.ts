@@ -11,7 +11,7 @@ export default class RestaurantService {
 
     async getAllRestaurants() {
         try {
-            const response = await axios.get(`${this.baseUrl}/site/v1/brands`, {
+            const response = await axios.get(`${this.baseUrl}/site/1593/brands`, {
                 headers: {
                     Authorization: `Bearer ${this.accessToken}`,
                     'Content-Type': 'application/json',
