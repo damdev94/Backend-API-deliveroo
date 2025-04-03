@@ -1,6 +1,5 @@
 import express from "express";
 
-import UberAuthRouter from "./routes/uber/uberAuth.routes";
 
 import DeliverooRouter from "./routes/deliveroo/deliveroo.routes";
 import RestaurantRouter from "./routes/deliveroo/restaurant.routes";
@@ -12,9 +11,6 @@ const app =  express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 app.use(express.json());
 
-
-//Uber
-app.use("/uber", UberAuthRouter);
 
 // Deliveroo
 app.use("/deliveroo", DeliverooRouter);
