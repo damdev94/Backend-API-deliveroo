@@ -5,10 +5,12 @@ export default class DeliverooService {
 
     private clientId : string;
     private clientSecret: string;
+    public accessToken: string;
 
     constructor() {
-        this.clientId = 'm8ofide9ckmrotvqes36c9tgd';
-        this.clientSecret = '1fl9v6nqb5vo8pv0e2l8538vh7mmos57okq8stq2hms27a4a5edg';
+        this.clientId = '6do68ig50jbg84afhvkrmaa4gd';
+        this.clientSecret = 'bgckteah0ur3p457rtub7ipkv43b1j2cmsmj14rrjaokghhtv4d';
+        this.accessToken = ""
     }
 
     async getAccessToken(): Promise<string> {
@@ -27,9 +29,9 @@ export default class DeliverooService {
                 }
             );
     
-            const accessToken = response.data.access_token;
-            console.log('Token d\'accès obtenu:', accessToken);
-            return accessToken;
+            this.accessToken = response.data.access_token;
+            console.log('Token d\'accès obtenu:', this.accessToken);
+            return this.accessToken;
         } catch (error: any) {
             console.error('Erreur lors de la récupération du token:', error.response?.data || error.message);
             throw new Error('Impossible d\'obtenir le token d\'accès');

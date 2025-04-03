@@ -33,7 +33,7 @@ export default class RestaurantService {
 
     const options = {
         method: 'PUT',
-        url: 'https://api-sandbox.developers.deliveroo.com/menu/v1/brands/bc69eb7c-9cf4-4ac5-8684-9ea076493133/menus/20',
+        url: 'https://api-sandbox.developers.deliveroo.com/menu/v1/brands/bc69eb7c-9cf4-4ac5-8684-9ea076493133/menus/21',
         headers: {accept: 'application/json',authorization: `Bearer ${this.accessToken}`, 'content-type': 'application/json'},
         data: {
           menu: {
@@ -53,6 +53,11 @@ export default class RestaurantService {
                 id: 'breakfast-bundle',
                 item_ids: ['breakfast-bundle'],
                 name: {en: 'Breakfast bundle 📦'}
+              },
+              {
+                id: 'bundles',
+                item_ids: ['breakfast-bundle', 'brunch-bundle'],
+                name: { en: 'Bundles 🍽' }
               }
             ],
             items: [
@@ -70,7 +75,10 @@ export default class RestaurantService {
                 operational_name: 'orange-juice',
                 plu: 'orange_juice_$69',
                 price_info: {
-                  overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}],
+                  "overrides": [
+                    { "id": "breakfast-bundle", "price": 0, "type": "ITEM" },
+                    { "id": "brunch-bundle", "price": 0, "type": "ITEM" }
+                  ],
                   price: 250
                 },
                 tax_rate: '20',
@@ -78,7 +86,25 @@ export default class RestaurantService {
               },
               {
                 contains_alcohol: false,
-                description: {en: 'Porridge with a drink of your choice.'},
+                description: { en: 'Includes a porridge, a drink and a topping' },
+                external_data: '',
+                barcodes: ['1234567890123', '3210987654321'],
+                id: 'brunch-bundle',
+                is_eligible_as_replacement: true,
+                is_eligible_for_substitution: true,
+                max_quantity: null,
+                modifier_ids: ['choose_your_porridge', 'choose_your_drink', 'extra_toppings'],
+                name: { en: 'Brunch bundle' },
+                operational_name: 'Brunch bundle',
+                plu: 'brunch_bundle123',
+                price_info: { price: 500 },
+                tax_rate: '20',
+                type: 'BUNDLE',
+                party_size: 1
+              },
+              {
+                contains_alcohol: false,
+                description: { en: 'Porridge with a drink of your choice.' },
                 external_data: '',
                 barcodes: ['5012345678900', '3014260115531'],
                 id: 'breakfast-bundle',
@@ -86,12 +112,13 @@ export default class RestaurantService {
                 is_eligible_for_substitution: true,
                 max_quantity: null,
                 modifier_ids: ['choose_your_porridge', 'choose_your_drink'],
-                name: {en: 'Breakfast bundle'},
+                name: { en: 'Breakfast bundle' },
                 operational_name: 'Breakfast bundle',
                 plu: 'breakfast_bundle123',
-                price_info: {price: 450},
+                price_info: { price: 450 },
                 tax_rate: '20',
-                type: 'ITEM'
+                type: 'BUNDLE',
+                party_size: 1
               },
               {
                 allergies: ['milk'],
@@ -104,12 +131,11 @@ export default class RestaurantService {
                 is_eligible_as_replacement: true,
                 is_eligible_for_substitution: true,
                 max_quantity: 2,
-                modifier_ids: ['extra_toppings'],
                 name: {en: 'Porridge with blueberries'},
                 nutritional_info: {energy_kcal: {high: 456, low: 123}, hfss: false},
                 operational_name: 'Porridge with blueberries',
                 plu: 'porridge_blueberries123',
-                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}], price: 350},
+                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}, {id: 'brunch-bundle', price: 0, type: 'ITEM'}],  price: 350},
                 tax_rate: '20',
                 type: 'ITEM'
               },
@@ -142,7 +168,7 @@ export default class RestaurantService {
                 name: {en: 'Coffee'},
                 operational_name: 'coffee',
                 plu: 'coffee_$78',
-                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}], price: 250},
+                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}, { id: 'brunch-bundle', price: 0, type: 'ITEM' }], price: 250},
                 tax_rate: '20',
                 type: 'ITEM'
               },
@@ -159,7 +185,7 @@ export default class RestaurantService {
                 name: {en: 'Tea'},
                 operational_name: 'tea',
                 plu: 'tea_$23',
-                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}], price: 150},
+                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'},  { id: 'brunch-bundle', price: 0, type: 'ITEM' }], price: 150},
                 tax_rate: '20',
                 type: 'ITEM'
               },
@@ -178,7 +204,7 @@ export default class RestaurantService {
                 plu: 'peanut_butter_123',
                 price_info: {price: 100},
                 tax_rate: '20',
-                type: 'CHOICE'
+                type: 'ITEM'
               },
               {
                 contains_alcohol: false,
@@ -192,9 +218,14 @@ export default class RestaurantService {
                 name: {en: 'Granola'},
                 operational_name: 'granola',
                 plu: 'granola_123',
-                price_info: {price: 100},
+                price_info: {
+                  price: 100,
+                  overrides: [
+                    { id: 'brunch-bundle', price: 50, type: 'ITEM' } // ✅ override reconnu
+                  ]
+                },
                 tax_rate: '20',
-                type: 'CHOICE'
+                type: 'ITEM'
               },
               {
                 contains_alcohol: false,
@@ -226,7 +257,7 @@ export default class RestaurantService {
                 plu: 'honey_123',
                 price_info: {price: 0},
                 tax_rate: '20',
-                type: 'CHOICE'
+                type: 'ITEM'
               },
               {
                 allergies: ['milk'],
@@ -238,18 +269,24 @@ export default class RestaurantService {
                 is_eligible_as_replacement: false,
                 is_eligible_for_substitution: true,
                 max_quantity: 2,
-                modifier_ids: ['extra_toppings'],
                 name: {en: 'Porridge with bananas'},
                 operational_name: 'porridge-ban',
                 plu: 'porridge_banana123',
-                price_info: {overrides: [{id: 'breakfast-bundle', price: 0, type: 'ITEM'}], price: 350},
+                price_info: {
+                  overrides: [
+                    {id: 'breakfast-bundle', price: 0, type: 'ITEM'},
+                    {id: 'brunch-bundle', price: 0, type: 'ITEM'} // ✅ ici
+                  ],
+                  price: 350
+                },
                 tax_rate: '20',
                 type: 'ITEM'
               }
+              
             ],
             mealtimes: [
                 {
-                  category_ids: ['breakfast-bundle', 'porridge', 'drinks'],
+                  category_ids: ['breakfast-bundle', 'porridge', 'drinks', 'bundles'],
                   description: {
                     en: 'Best breakfast menu in town! Everything on the menu is freshly made at the start of the day.'
                   },
@@ -360,37 +397,41 @@ export default class RestaurantService {
                 description: {en: 'you can choice your modiiers here'},
                 id: 'choose_milk',
                 item_ids: ['no_milk', 'whole_milk'],
-                max_selection: 1,
-                min_selection: 0,
+                max_selection: 2,
+                min_selection: 1,
                 name: {en: 'Choose milk'},
-                repeatable: true
+                repeatable: true,
+                type: "product-variation"
               },
               {
-                description: {en: 'you can choice your modiiers here'},
+                description: { en: 'you can choose your modifiers here' },
                 id: 'choose_your_porridge',
                 item_ids: ['porridge_blueberries', 'porridge_banana'],
-                max_selection: 1,
-                min_selection: 0,
-                name: {en: 'Choose your porridge'},
-                repeatable: true
+                max_selection: 2,
+                min_selection: 1,
+                name: { en: 'Choose your porridge' },
+                repeatable: true,
+                type: 'bundle-item' // ✅ type accepté dans un bundle
               },
               {
                 description: {en: 'you can choice your modiiers here'},
                 id: 'choose_your_drink',
                 item_ids: ['tea', 'coffee', 'orange_juice'],
-                max_selection: 1,
+                max_selection: 2,
                 min_selection: 1,
                 name: {en: 'Choose your drink'},
-                repeatable: true
+                repeatable: true,
+                type: 'bundle-item'
               },
               {
                 description: {en: 'you can choice your modiiers here'},
                 id: 'extra_toppings',
                 item_ids: ['honey', 'peanut_butter', 'granola'],
                 max_selection: 3,
-                min_selection: 0,
+                min_selection: 1,
                 name: {en: 'Choice of extra toppings 🍯'},
-                repeatable: false
+                repeatable: false,
+                type: "bundle-item"
               }
             ],
             experience: 'aisles'
@@ -406,7 +447,7 @@ export default class RestaurantService {
         .catch(err => console.error(err));
     }
 
-async getMenu(){
+  async getMenu(){
     const options = {
         method: 'GET',
         url: 'https://api-sandbox.developers.deliveroo.com/menu/v1/brands/bc69eb7c-9cf4-4ac5-8684-9ea076493133/menus/1',
@@ -417,7 +458,7 @@ async getMenu(){
         .request(options)
         .then(res => console.log(res.data))
         .catch(err => console.error(err));
-}
+  }
   
   
 
@@ -441,18 +482,16 @@ async getMenu(){
 //     }
     
 
-//     async getAllRestaurants() {
-//         try {
-//             const response = await axios.get(`${this.baseUrl}/site/v1/restaurant_locations/1593`, {
-//                 headers: {
-//                     Authorization: `Bearer ${this.accessToken}`,
-//                     'Content-Type': 'application/json',
-//                 },
-//             });
-//             return response.data.brands
-//         } catch (err: any) {
-//             console.error('Error fetching restaurant:', err.response?.data || err.message);
-//             throw new Error('Unable to fetch restaurants.');
-//         }
-//     }
+    async getAllRestaurants() {
+      const options = {
+        method: 'GET',
+        url: 'https://api-sandbox.developers.deliveroo.com/site/v1/brands/878b3a36-0140-4d1f-8c4e-84585c6ff3cf/sites',
+        headers: {accept: 'application/json', authorization: `Bearer ${this.accessToken}`}
+      };
+      
+      axios
+        .request(options)
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err));
+    }
 }

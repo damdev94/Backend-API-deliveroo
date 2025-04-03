@@ -1,5 +1,5 @@
 import { Router } from "express";
-import WebhookStatusService from "../services/webhookStatus.service";
+import WebhookStatusService from "../../services/deliveroo/webhookStatus.service";
 
 const router = Router();
 

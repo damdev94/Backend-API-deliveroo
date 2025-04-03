@@ -1,5 +1,5 @@
 import { Router } from "express";
-import DeliverooService from "../services/deliveroo.service";
+import DeliverooService from "../../services/deliveroo/deliveroo.service";
 
 const router = Router();
 
