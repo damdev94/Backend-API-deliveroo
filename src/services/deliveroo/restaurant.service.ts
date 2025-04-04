@@ -71,7 +71,7 @@ export default class RestaurantService {
                 is_eligible_as_replacement: true,
                 is_eligible_for_substitution: true,
                 max_quantity: null,
-                name: {en: 'Orange juice'},
+                name: {en: 'Orange juice 🍊'},
                 operational_name: 'orange-juice',
                 plu: 'orange_juice_$69',
                 price_info: {

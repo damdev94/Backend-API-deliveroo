@@ -30,7 +30,6 @@ export default class DeliverooService {
             );
     
             this.accessToken = response.data.access_token;
-            console.log('Token d\'accès obtenu:', this.accessToken);
             return this.accessToken;
         } catch (error: any) {
             console.error('Erreur lors de la récupération du token:', error.response?.data || error.message);
